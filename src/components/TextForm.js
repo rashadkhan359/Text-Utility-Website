@@ -2,19 +2,21 @@ import React, {useState} from 'react'
 
 
 export default function TextForm(props) {
-  const [text, setText] = useState('');
-//   text = "new Text"  //Wrong way to change the state
+    const [text, setText] = useState('');
+    //text = "new Text"  //Wrong way to change the state
     //setText("Rashad"); //Right way
 
     //UPPERCASE
     const handleUpperCaseOnClick = ()=>{
         let newText = text.toUpperCase();
         setText(newText);
+        props.showAlert("Converted to Upper Case", "success");
     }
     //lowercase
     const handleLowerCaseOnClick = ()=>{
         let newText = text.toLowerCase();
         setText(newText);
+        props.showAlert("Converted to Lower Case", "success");
     }
     //aLtErNaTeCaSe
     const handleAlternateCaseOnClick = ()=>{
@@ -27,15 +29,16 @@ export default function TextForm(props) {
             }
         }
         setText(newText);
+        props.showAlert("Converted to Alternate Case", "success");
     }
     //Sentence case
     const handleSentenceCaseOnClick = ()=>{
         let newText = '';
         for(let i=0; i<text.length; i++){
-            if(i==0){
+            if(i===0){
                 newText += text.charAt(i).toUpperCase();
-            }else if(text.charAt(i)=='.'){
-                if (text.charAt(i+1)==' '){
+            }else if(text.charAt(i)==='.'){
+                if (text.charAt(i+1)===' '){
                     newText = newText+'.'+ text.charAt(i+1) + text.charAt(i+2).toUpperCase();
                     i=i+2;
                 }else{
@@ -47,6 +50,7 @@ export default function TextForm(props) {
             }
         }
         setText(newText);
+        props.showAlert("Converted to Sentence Case", "success");
     }
 
     const handleOnChange = (event)=>{        //If you don't listen to event, you can't type in textarea.
@@ -56,7 +60,7 @@ export default function TextForm(props) {
 
     let words = text.split(" ").length;
     //This below code stops length from showing 1 if nothing is written in textarea and if word ends with space.
-    if (text == "" || text.endsWith(" ")){
+    if (text === "" || text.endsWith(" ")){
         words -= 1;
     }
 
@@ -64,7 +68,6 @@ export default function TextForm(props) {
     <div style={{color: props.mode===`dark`?`white`:`black`}}>
         <h1>{props.heading}</h1>
         <div className="mb-3">
-            <label htmlFor="textArea" className="form-label">Example textarea</label>
             <textarea className="form-control" style={{backgroundColor: props.mode===`dark`?`black`:`white`, color: props.mode===`dark`?`white`:`#262727` }} value={text} onChange={handleOnChange} id="textArea" rows="3"></textarea>
         {/* THIS IS AN OBJECT =>  {backgroundColor: props.mode===`dark`?`black`:`white`, color: props.mode===`dark`?`white`:`#262727` } */}
         </div>
